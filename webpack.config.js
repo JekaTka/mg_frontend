@@ -10,7 +10,7 @@ module.exports = {
     plugins: [
         // new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
-            hash: true,
+            // hash: true,
             filename: 'index.html',
             template: __dirname + '/src/index.html'
         }),
@@ -20,19 +20,51 @@ module.exports = {
     ],
     module: {
         loaders: [
-            {
-                test: /\.(js|jsx)$/,
-                exclude: /node_modules/,
-                loader: 'babel-loader'
-            }
+          {
+            test: /\.scss$/i,
+            loaders: [
+                'css-loader?minimize',
+                'sass-loader'
+            ]
+          },
+          {
+            test: /\.less$/,
+            use: [
+              {loader: "style-loader"},
+              {loader: "css-loader"},
+              {
+                loader: "less-loader",
+                options: {
+                    javascriptEnabled: true
+                }
+              }
+            ]
+          },
+          {
+              test: /\.css$/i,
+              loader: 'css-loader?-minimize',
+
+          },
+          {
+              test: /\.(js|jsx)$/,
+              exclude: /node_modules/,
+              loader: 'babel-loader',
+              options: {
+                plugins: [
+                  ['import', { libraryName: "antd", style: true }]
+                ]
+              },
+          }
         ]
     },
     output: {
         path: __dirname + '/dist',
-        filename: '[name].[chunkhash].js'
+        filename: '[name].[chunkhash].js',
+        publicPath: "/"
     },
     devServer: {
         contentBase: path.join(__dirname, './dist/'),
+        publicPath: "/",
         historyApiFallback: true
     }
 };
