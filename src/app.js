@@ -5,13 +5,13 @@ import styled from 'styled-components';
 import Main from './main';
 const { Header, Sider, Content, Footer } = Layout;
 
-const StyledContent = styled(Content)`
-    background: #fff;
+const StyledHeader = styled(Header)`
+    background: inherit;
 `;
 
 export default () => (
   <Layout>
-    <Header>
+    <StyledHeader>
       <Row type="flex" justify="center">
         <Col span={8}>
           <Row type="flex" justify="center">
@@ -29,13 +29,11 @@ export default () => (
           </Row>
         </Col>
       </Row>
-    </Header>
+    </StyledHeader>
     <Layout>
-      <Sider>left sidebar</Sider>
-      <StyledContent className="test">
+      <Content>
         <Main />
-      </StyledContent>
-      <Sider>right sidebar</Sider>
+      </Content>
     </Layout>
     <Footer>footer</Footer>
   </Layout>
